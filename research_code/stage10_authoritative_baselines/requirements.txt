@@ -1,0 +1,7 @@
+einops>=0.8
+termcolor>=2.4
+h5py>=3.10
+imageio>=2.34
+opencv-python-headless>=4.9
+transformers==4.46.3
+git+https://github.com/openai/CLIP.git

@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Data, model weights, and generated features
+data/
+datasets/
+checkpoints/
+weights/
+pretrained/
+cache/
+caches/
+runs/
+logs/
+outputs/
+predictions/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npy
+*.npz
+*.h5
+*.hdf5
+
+# Generated experiment artifacts
+*.log
+*.tmp
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+workdir/
+materialized/
+
+# LaTeX build products (if paper sources are added later)
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz

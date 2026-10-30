@@ -1,0 +1,12 @@
+# Optional packages used only by authoritative baseline wrappers.
+-r requirements.txt
+termcolor>=2.4,<3
+h5py>=3.10,<4
+imageio>=2.34,<3
+opencv-python-headless>=4.9,<5
+transformers==4.46.3
+git+https://github.com/openai/CLIP.git
+
+# RSCaMa additionally requires CUDA/torch/Python-matched wheels for mamba-ssm
+# and causal-conv1d. Install those from their official release pages rather
+# than compiling an arbitrary source archive into the core environment.

@@ -1,0 +1,16 @@
+{
+  "model": "chg2cap", "family": "geometry_quality", "seed": 20261008,
+  "dataset_root": "__DATA_ROOT__/LEVIR-MCI-dataset",
+  "metadata_root": "__CHANGE_AGENT_ROOT__/data/LEVIR_MCI",
+  "change_agent_root": "__CHANGE_AGENT_ROOT__",
+  "degradation_script": "__PROJECT_ROOT__/stage6_5_calibrated_v3/degradation/calibrated_v3.py",
+  "project_root": "__PROJECT_ROOT__/stage10_authoritative_baselines",
+  "output_root": "__PROJECT_ROOT__/stage10_authoritative_baselines/runs/chg2cap",
+  "allowed_degradations": ["cloud","haze","gaussian_noise","jpeg","pixel_dropout","radiometric_shift"],
+  "heldout_degradations": ["blur","low_resolution","misregistration","mixed"],
+  "severity": 2, "degradation_seed": 20260928, "clean_probability": 0.25,
+  "image_size": 256, "normalization": "imagenet", "max_length": 41,
+  "encoder_layers": 3, "decoder_layers": 3, "heads": 8, "dropout": 0.3,
+  "batch_size": 6, "eval_batch_size": 12, "num_workers": 4,
+  "lr": 0.00005, "weight_decay": 0.01, "epochs": 30, "patience": 8, "label_smoothing": 0.05
+}
