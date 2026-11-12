@@ -7,6 +7,5 @@
 - `protocols/lofo_families.json`: canonical family membership and reporting
   rules.
 
-The JSON files are path-tokenized templates. `tools/audit_release.py` checks
-that the two main templates remain identical to their validated stage copies.
-Use `tools/materialize_workspace.py` before execution.
+The JSON files are path-tokenized public copies of the validated experiment
+configurations. Use `tools/materialize_workspace.py` before execution.

@@ -2,8 +2,7 @@
 
 Third-party repositories, datasets, and pretrained weights are not vendored in
 this release. Clone them separately and comply with their own licenses and
-dataset terms. The license eventually selected for Partial-RelKD will cover
-only original code in this repository.
+dataset terms.
 
 ## Required for the main method
 

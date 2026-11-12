@@ -30,7 +30,7 @@ partial_relkd/                      # reusable method components
   losses/distillation.py            # caption CE, token KD, and relation KD
 configs/                            # concise public configuration entry points
 scripts/                            # train/evaluate command wrappers
-baselines/wrappers/                 # seven-baseline adapters; no vendor source
+baselines/wrappers/                 # interfaces for seven comparison baselines
 experiments/legacy_stages/          # exact validated stage drivers and ablations
 reported_results/                   # paper-aligned canonical summaries
 docs/                               # method and severity figures
@@ -114,6 +114,9 @@ The public copies of the principal configurations are under `configs/`; the
 exact historical commands and complete hyperparameters remain beside each
 validated driver under `experiments/legacy_stages`. The standard test setting
 is severity 2 with degradation seed `20260928`.
+
+For a complete copy-and-run sequence from workspace setup through
+31-condition evaluation, see [`docs/REPRODUCTION.md`](docs/REPRODUCTION.md).
 
 ## Repository validation
 

@@ -21,6 +21,8 @@ Thumbs.db
 data/
 !partial_relkd/data/
 !partial_relkd/data/**
+partial_relkd/data/**/__pycache__/
+partial_relkd/data/**/*.py[cod]
 datasets/
 checkpoints/
 weights/

@@ -4,15 +4,12 @@ This directory contains the compact, paper-aligned results retained in the
 public release. All caption scores use the same BLEU-4 (B4), ROUGE-L (R-L),
 and CIDEr implementation.
 
-`PAPER_ALIGNMENT.md` records the final submitted-manuscript consistency audit.
-
 ## Primary tables
 
-- [`authoritative_baseline_comparison.md`](authoritative_baseline_comparison.md):
-  paper-aligned unseen comparison against seven external RSCC baselines,
-  Partial-RelKD (mask-free), and Partial-RelKD on three datasets.
 - [`three_dataset_full_results.md`](three_dataset_full_results.md): complete
-  Clean/Seen/Unseen/Mixed results on LEVIR-MCI, SECOND-CC, and WHU-CDC.
+  Clean/Seen/Unseen/Mixed comparison against seven external RSCC baselines,
+  Partial-RelKD (mask-free), and Partial-RelKD on LEVIR-MCI, SECOND-CC, and
+  WHU-CDC.
 
 ## Supporting results
 
@@ -24,6 +21,8 @@ and CIDEr implementation.
   machine-readable values.
 - `severity_audit.json`: deterministic severity-generation audit.
 - `efficiency.md`: parameter, latency, and memory measurements.
+- `per_condition/`: canonical 31-condition metrics for Partial-RelKD and its
+  independently retrained mask-free counterpart.
 
 SECOND-CC and WHU-CDC results are obtained after independent supervised
 training with each dataset's own images, captions, vocabulary, and splits,
