@@ -5,7 +5,7 @@ cd "$ROOT"
 mkdir -p logs runs results
 exec > >(tee -a logs/run_all.log) 2>&1
 trap 'echo "===== FAILED line=$LINENO time=$(date "+%F %T") ====="' ERR
-MODELS=(rsiccformer mccformer_d chg2cap sen rscama)
+MODELS=(rsiccformer mccformer_d chg2cap sen)
 echo "===== START $(date '+%F %T') ====="
 python -m compileall -q runner vendor
 PREFLIGHT=()
@@ -23,4 +23,4 @@ for model in "${MODELS[@]}"; do
 done
 python runner/summarize.py --results results | tee logs/summary.log
 du -sh "$ROOT"
-echo "===== ALL FIVE BASELINES COMPLETED $(date '+%F %T') ====="
+echo "===== ALL FOUR BASELINES COMPLETED $(date '+%F %T') ====="

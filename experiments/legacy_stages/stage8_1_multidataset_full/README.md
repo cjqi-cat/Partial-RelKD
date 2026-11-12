@@ -3,7 +3,8 @@
 This stage independently trains Change-Agent, M2, and Partial-RelKD using each
 target dataset's own training images, captions, vocabulary, and official
 splits. It evaluates method-level reproducibility under the same
-geometry-quality LOFO protocol; it is not a zero-shot transfer experiment.
+geometry-quality LOFO protocol to assess method-level reproducibility after
+independent target-dataset retraining.
 
 Raw data are expected at `__DATA_ROOT__/SECOND-CC-AUG` and
 `__DATA_ROOT__/WHU_CDC/whu_CDC_dataset`. First generate list/token/vocabulary

@@ -12,8 +12,6 @@ from common import allowed_degradations, load_operators, stable_seed
 
 IMAGENET_MEAN = np.asarray((0.485, 0.456, 0.406), np.float32)[:, None, None]
 IMAGENET_STD = np.asarray((0.229, 0.224, 0.225), np.float32)[:, None, None]
-CLIP_MEAN = np.asarray((0.48145466, 0.4578275, 0.40821073), np.float32)[:, None, None]
-CLIP_STD = np.asarray((0.26862954, 0.26130258, 0.27577711), np.float32)[:, None, None]
 
 
 def image_tensor(image, size, normalization):
@@ -21,8 +19,7 @@ def image_tensor(image, size, normalization):
     if image.size != (size, size):
         image = image.resize((size, size), Image.Resampling.BICUBIC)
     x = np.asarray(image, np.float32).transpose(2, 0, 1) / 255.0
-    mean, std = (CLIP_MEAN, CLIP_STD) if normalization == "clip" else (IMAGENET_MEAN, IMAGENET_STD)
-    return torch.from_numpy(((x - mean) / std).copy())
+    return torch.from_numpy(((x - IMAGENET_MEAN) / IMAGENET_STD).copy())
 
 
 class CaptionTokens:

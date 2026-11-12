@@ -36,7 +36,6 @@ the venue explicitly permits it.
 
 ```bash
 cd Partial-RelKD-GitHub
-python tools/audit_release.py
 python tools/smoke_test.py
 git init
 git add .

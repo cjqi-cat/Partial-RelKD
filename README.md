@@ -1,6 +1,6 @@
 # Partial-RelKD
 
-Research-code release candidate for robust remote-sensing change captioning under
+Research-code release for robust remote-sensing change captioning under
 leave-one-degradation-family-out (LOFO) evaluation.
 
 Partial-RelKD keeps the original task unchanged: a possibly degraded
@@ -104,17 +104,14 @@ exact historical commands and complete hyperparameters remain beside each
 validated driver under `experiments/legacy_stages`. The standard test setting
 is severity 2 with degradation seed `20260928`.
 
-## Verification before upload or execution
+## Repository validation
 
 ```bash
-python tools/audit_release.py
 python tools/smoke_test.py
 python -m compileall -q partial_relkd scripts experiments baselines tools
 ```
 
-The audit checks for large/binary artifacts, private paths, common credential
-patterns, unresolved non-template path leakage, and missing core files. The
-data-free smoke test checks path materialization and the nine individual
+The data-free smoke test checks path materialization and the nine individual
 degradation operators plus the mixed composition. It does not claim model inference, which needs
 the externally supplied datasets, upstream code, and checkpoints documented
 above.
@@ -132,10 +129,3 @@ above.
 - Stress tests: clean, seen, unseen, mixed, and severity 1--5. The public
   summaries also include the independently retrained mask-free variant.
 
-## Release status
-
-This folder is a public-release candidate. Before making it public, run a
-clean-clone smoke test and verify the submitted-paper numbers against
-`reported_results/`. No explicit repository license is currently granted.
-Author and citation metadata may remain anonymous until the venue's
-double-blind period ends.

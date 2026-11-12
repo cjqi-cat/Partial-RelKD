@@ -38,7 +38,8 @@ or change/no-change definition.
 The scripts under `stage8_1_multidataset_full` build dataset-specific views and
 metadata. Each experiment uses the target dataset's own training images,
 captions, vocabulary, and train/validation/test split. These are
-target-supervised reproductions, not zero-shot transfer experiments.
+independently supervised reproductions used to assess method-level
+reproducibility across datasets.
 
 Because local extractions may use different folder names, inspect
 `runner/prepare_views.py` before materializing and pass the official dataset

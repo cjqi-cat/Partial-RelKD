@@ -25,8 +25,6 @@ and LEVIR-MCI token/list interface expected by the experiment wrappers.
 | SEN | https://github.com/mrazhou/SEN | `42b97b62ff8ccd57938d371ff0affec59fc13410` | No license file detected; do not redistribute without permission |
 | SCNet | https://github.com/sundongwei/SCNet | `3174de1dc3579bcf6a459633ca1e061ba7208e81` | MIT |
 | RMNet | https://github.com/Jiahuiqu/RMNet | `d925e6874f8b58b3f1d315ef718f69a0ec785a38` | No license file detected at audit time; do not redistribute without permission |
-| RSCaMa (optional wrapper retained for ablation compatibility) | https://github.com/Chen-Yang-Liu/RSCaMa | `aa68e4c6933c7dd0f2e2f9cbd7642d61929c86a5` | No license file detected; do not redistribute without permission |
-| OpenAI CLIP | https://github.com/openai/CLIP | install from upstream when required | MIT |
 
 The corresponding directories under `baselines/wrappers/` contain only local
 experiment wrappers and configuration logic.

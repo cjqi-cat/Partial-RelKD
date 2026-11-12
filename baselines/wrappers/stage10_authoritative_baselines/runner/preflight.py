@@ -13,7 +13,7 @@ def main():
         if c["allowed_degradations"] != expected: raise SystemExit(f"{path}: allowed mismatch {c['allowed_degradations']} != {expected}")
         if set(c["allowed_degradations"]) & set(c["heldout_degradations"]): raise SystemExit(f"{path}: LOFO leakage")
         vendor = {"chg2cap": "chg2cap", "mccformer_d": "sen", "rsiccformer": "sen",
-                  "sen": "sen", "rscama": "rscama"}[c["model"]]
+                  "sen": "sen"}[c["model"]]
         vendor_root = Path(c["project_root"]) / "vendor" / vendor
         if not vendor_root.is_dir(): missing.append(f"vendor={vendor_root}")
         if missing: raise SystemExit(f"{path}: missing " + ", ".join(missing))

@@ -121,57 +121,10 @@ class Chg2CapBaseline(CaptionBaseline):
         return self.decoder(memory[0], memory[1], tokens, lengths)
 
 
-class CLIPPatchEncoder(nn.Module):
-    def __init__(self, model_name):
-        super().__init__()
-        import clip
-        model, _ = clip.load(model_name, jit=False)
-        self.visual = model.visual.float()
-        for p in self.visual.parameters(): p.requires_grad = False
-
-    def train(self, mode=True):
-        super().train(False)
-        return self
-
-    def one(self, x):
-        v = self.visual
-        x = v.conv1(x).reshape(x.shape[0], v.conv1.out_channels, -1).permute(0, 2, 1)
-        cls = v.class_embedding.to(x.dtype) + torch.zeros(x.shape[0], 1, x.shape[-1], device=x.device, dtype=x.dtype)
-        x = torch.cat((cls, x), 1) + v.positional_embedding.to(x.dtype)
-        x = v.ln_pre(x).permute(1, 0, 2)
-        x = v.transformer(x).permute(1, 0, 2)
-        return v.ln_post(x[:, 1:])
-
-    def forward(self, a, b):
-        with torch.no_grad(): return self.one(a), self.one(b)
-
-
-class RSCaMaBaseline(CaptionBaseline):
-    def __init__(self, cfg, vocab):
-        super().__init__()
-        _vendor(cfg, "rscama")
-        from model.model_encoder_attMamba import AttentiveEncoder
-        from model.model_decoder import DecoderTransformer
-        self.backbone = CLIPPatchEncoder(cfg.get("clip_model", "ViT-B/32"))
-        self.fusion = AttentiveEncoder(cfg.get("encoder_layers", 3), [7, 7, 768], cfg.get("heads", 8),
-                                       cfg.get("dropout", .3))
-        self.decoder = DecoderTransformer("transformer_decoder", 768, len(vocab), cfg.get("max_length", 41),
-                                          vocab, cfg.get("heads", 8), cfg.get("decoder_layers", 3),
-                                          cfg.get("dropout", .3))
-
-    def encode(self, a, b):
-        fa, fb = self.backbone(a, b)
-        return self.fusion(fa, fb)
-
-    def decode(self, memory, tokens, lengths):
-        return self.decoder(memory, tokens, lengths)
-
-
 def build_model(cfg, vocab):
     name = cfg["model"]
     if name == "sen": return SENBaseline(cfg, vocab)
     if name == "rsiccformer": return RSICCFamily(cfg, vocab, False)
     if name == "mccformer_d": return RSICCFamily(cfg, vocab, True)
     if name == "chg2cap": return Chg2CapBaseline(cfg, vocab)
-    if name == "rscama": return RSCaMaBaseline(cfg, vocab)
     raise ValueError(name)
