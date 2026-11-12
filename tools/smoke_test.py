@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_degradations():
-    path = ROOT / "research_code" / "stage6_5_calibrated_v3" / "degradation" / "calibrated_v3.py"
+    path = ROOT / "partial_relkd" / "data" / "degradations.py"
     spec = importlib.util.spec_from_file_location("calibrated_v3_release", path)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Cannot import degradation module: {path}")
@@ -53,6 +53,19 @@ def check_materialization() -> None:
         required = output / "stage6_7_partial_hybrid" / "runner" / "train.py"
         if not required.is_file():
             raise RuntimeError(f"Materialization omitted core file: {required}")
+        public_config = output / "configs" / "stage2" / "partial_relkd.json"
+        if not public_config.is_file():
+            raise RuntimeError(f"Materialization omitted public config: {public_config}")
+        compatibility = (
+            output / "stage6_5_calibrated_v3" / "degradation" / "calibrated_v3.py"
+        )
+        spec = importlib.util.spec_from_file_location("materialized_calibrated_v3", compatibility)
+        if spec is None or spec.loader is None:
+            raise RuntimeError(f"Cannot load compatibility module: {compatibility}")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        if tuple(module.CORRUPTIONS) != tuple(load_degradations().CORRUPTIONS):
+            raise RuntimeError("Materialized compatibility degradation list drifted")
         tokens = ("__PROJECT_ROOT__", "__DATA_ROOT__", "__CHANGE_AGENT_ROOT__")
         unresolved = []
         text_suffixes = {".py", ".json", ".sh", ".md", ".txt", ".yaml", ".yml"}

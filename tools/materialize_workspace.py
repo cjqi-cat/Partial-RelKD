@@ -23,19 +23,28 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     repository = Path(__file__).resolve().parents[1]
-    source = repository / "research_code"
+    stage_sources = (
+        repository / "experiments" / "legacy_stages",
+        repository / "baselines" / "wrappers",
+    )
     output = args.output.expanduser().resolve()
     if output.exists() and any(output.iterdir()):
         raise SystemExit(f"Refusing to write into non-empty directory: {output}")
     output.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(
-        source,
-        output,
-        dirs_exist_ok=True,
-        ignore=shutil.ignore_patterns(
-            "__pycache__", "*.pyc", "*.pt", "*.pth", "*.log", "runs", "results", "logs"
-        ),
+    ignore = shutil.ignore_patterns(
+        "__pycache__", "*.pyc", "*.pt", "*.pth", "*.log", "runs", "results", "logs"
     )
+    copied_names: set[str] = set()
+    for source in stage_sources:
+        for stage in source.iterdir():
+            if not stage.is_dir():
+                continue
+            if stage.name in copied_names:
+                raise SystemExit(f"Duplicate materialized stage name: {stage.name}")
+            copied_names.add(stage.name)
+            shutil.copytree(stage, output / stage.name, ignore=ignore)
+    shutil.copytree(repository / "partial_relkd", output / "partial_relkd", ignore=ignore)
+    shutil.copytree(repository / "configs", output / "configs", ignore=ignore)
 
     work_root = (args.work_root or output.parent).expanduser().resolve()
     storage_root = (args.storage_root or work_root.parent).expanduser().resolve()

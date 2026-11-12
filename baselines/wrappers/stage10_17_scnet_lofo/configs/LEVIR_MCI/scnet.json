@@ -1,0 +1,18 @@
+{
+  "model": "scnet", "protocol": "geometry_quality_LOFO",
+  "dataset_root": "__DATA_ROOT__/LEVIR-MCI-dataset",
+  "metadata_root": "__CHANGE_AGENT_ROOT__/data/LEVIR_MCI",
+  "change_agent_root": "__CHANGE_AGENT_ROOT__",
+  "degradation_script": "__PROJECT_ROOT__/stage6_5_calibrated_v3/degradation/calibrated_v3.py",
+  "scnet_root": "__PROJECT_ROOT__/stage10_17_scnet_lofo/vendor/SCNet",
+  "allowed_degradations": ["cloud", "haze", "gaussian_noise", "jpeg", "pixel_dropout", "radiometric_shift"],
+  "heldout_degradations": ["blur", "low_resolution", "misregistration"],
+  "severity": 2, "degradation_seed": 20260928, "seed": 20261016,
+  "image_size": 256, "image_scale": 1.0,
+  "image_mean": [100.6790, 99.5023, 84.9932], "image_std": [50.9820, 48.4838, 44.7057],
+  "max_length": 41, "network": "resnet101", "fine_tune_encoder": true,
+  "encoder_dim": 2048, "feature_size": 8, "feature_dim": 512,
+  "relation_layers": 3, "decoder_layers": 1, "heads": 8, "hidden_dim": 2048, "dropout": 0.1,
+  "epochs": 50, "batch_size": 8, "num_workers": 4, "lr": 0.0001,
+  "weight_decay": 0.0, "grad_clip": 5.0, "clean_probability": 0.25, "patience": 10
+}

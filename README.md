@@ -24,33 +24,33 @@ it requires no teacher, mask, clean reference, or degradation label.
 ## What is included
 
 ```text
-research_code/
-  dino_finetune_step1/              # Stage-1 DINOv2 adaptation implementation
-  stage4_caption_dino_finetune/     # clean caption-teacher preparation/training
-  stage6_5_calibrated_v3/           # calibrated-v3 online degradation operators
-  stage6_6_m2_backbones/            # strict-LOFO Stage-1 and DINO-Aug controls
-  stage6_7_partial_hybrid/           # P1/P2/P3 and 31-condition evaluation
-  stage8_1_multidataset_full/       # target-supervised SECOND-CC/WHU-CDC runs
-  stage8_2_dino_controls/            # DINO-Clean and DINO-Aug controls
-  stage8_4_levir_multiseed_server/  # DINO-Aug/P3 training-seed stability
-  stage10_2_paired_significance/    # P3 vs DINO-Aug clustered Bootstrap
-  stage10_3_p3_nomask/              # independently retrained mask-free lineage
-  stage10_5_p0_p2_nomask/           # mask-free P0/P1/P2 ablations
-  stage10_7_severity_curves/         # severity 1--5 evaluation
-  stage10_8_main_completion/         # full-family, seed, efficiency, mask-free extension
-  stage10_authoritative_baselines/  # baseline wrappers (vendor code excluded)
-  stage10_9_three_dataset_baselines/# three-dataset baseline wrappers
-reported_results/                    # compact canonical summaries only
-tools/                               # release audit and path materialization
+partial_relkd/                      # reusable method components
+  models/visual_adapter.py          # partial DINOv2 adaptation, adapter, and GRL
+  data/degradations.py              # calibrated-v3 online degradations
+  losses/distillation.py            # caption CE, token KD, and relation KD
+configs/                            # concise public configuration entry points
+scripts/                            # train/evaluate command wrappers
+baselines/wrappers/                 # seven-baseline adapters; no vendor source
+experiments/legacy_stages/          # exact validated stage drivers and ablations
+reported_results/                   # paper-aligned canonical summaries
+docs/                               # method and severity figures
+tools/                              # release audit and path materialization
 ```
 
 Raw datasets, pretrained weights, trained checkpoints, feature caches,
 per-sample predictions, logs, and third-party repositories are intentionally
 excluded. See [DATASETS.md](DATASETS.md) and [THIRD_PARTY.md](THIRD_PARTY.md).
 
+Install the public package and main dependencies with:
+
+```bash
+pip install -r requirements.txt
+pip install -e . --no-deps
+```
+
 ## Important: materialize paths before running
 
-The audited research scripts originally ran in a fixed server layout. In this
+The validated stage drivers originally ran in a fixed server layout. In this
 release, machine-specific prefixes are replaced by four explicit tokens:
 
 - `__PROJECT_ROOT__`
@@ -58,7 +58,7 @@ release, machine-specific prefixes are replaced by four explicit tokens:
 - `__CHANGE_AGENT_ROOT__`
 - `__WORK_ROOT__` / `__STORAGE_ROOT__`
 
-Do not execute files directly under `research_code/`. Generate a runnable copy:
+Generate a runnable compatibility workspace:
 
 ```bash
 python tools/materialize_workspace.py \
@@ -67,9 +67,18 @@ python tools/materialize_workspace.py \
   --change-agent-root /path/to/Change-Agent/Multi_change
 ```
 
-The command refuses to write into a non-empty output directory. It copies the
-research stages and substitutes all path tokens, leaving the tracked templates
+The command refuses to write into a non-empty output directory. It restores
+the original top-level `stage*` layout, copies the canonical `partial_relkd`
+package, and substitutes all path tokens while leaving tracked templates
 unchanged.
+
+The concise public wrappers delegate to those validated drivers. For example:
+
+```bash
+python scripts/train_partial_relkd.py --workspace /path/to/robust_cc/project -- \
+  --config /path/to/robust_cc/project/configs/stage2/partial_relkd.json \
+  --output /path/to/robust_cc/project/stage6_7_partial_hybrid/runs/p3_partial_relation
+```
 
 ## Reproducing the main geometry-quality protocol
 
@@ -90,22 +99,23 @@ After materialization:
 4. Evaluate clean plus all 30 degraded conditions with
    `stage6_7_partial_hybrid/runner/evaluate.py`.
 
-The exact commands and hyperparameters remain in the README and JSON files of
-each stage. The standard test setting is severity 2 with degradation seed
-`20260928`.
+The public copies of the principal configurations are under `configs/`; the
+exact historical commands and complete hyperparameters remain beside each
+validated driver under `experiments/legacy_stages`. The standard test setting
+is severity 2 with degradation seed `20260928`.
 
 ## Verification before upload or execution
 
 ```bash
 python tools/audit_release.py
 python tools/smoke_test.py
-python -m compileall -q research_code tools
+python -m compileall -q partial_relkd scripts experiments baselines tools
 ```
 
 The audit checks for large/binary artifacts, private paths, common credential
 patterns, unresolved non-template path leakage, and missing core files. The
-data-free smoke test checks path materialization and all ten deterministic
-online degradation operators. It does not claim model inference, which needs
+data-free smoke test checks path materialization and the nine individual
+degradation operators plus the mixed composition. It does not claim model inference, which needs
 the externally supplied datasets, upstream code, and checkpoints documented
 above.
 
@@ -116,9 +126,11 @@ above.
 - Main benchmark: LEVIR-MCI under three strict full-family LOFO protocols.
 - Additional datasets: SECOND-CC and WHU-CDC, independently trained with each
   dataset's own images, captions, vocabulary, and splits.
-- Stress tests: clean, seen, unseen, mixed, severity 1--5, multiple training
-  seeds, multiple degradation seeds, and paired clustered Bootstrap where
-  aligned per-sample predictions are available.
+- External comparisons: Change-Agent, Chg2Cap, MCCFormer-D, RSICCFormer, SEN,
+  SCNet, and RMNet, using public architectures inside the common training and
+  evaluation shell. Third-party source trees are not redistributed.
+- Stress tests: clean, seen, unseen, mixed, and severity 1--5. The public
+  summaries also include the independently retrained mask-free variant.
 
 ## Release status
 

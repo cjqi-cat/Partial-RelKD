@@ -1,0 +1,18 @@
+{
+  "all_degradations": [
+    "cloud", "haze", "gaussian_noise", "blur", "jpeg",
+    "low_resolution", "pixel_dropout", "misregistration",
+    "radiometric_shift", "mixed"
+  ],
+  "holdouts": {
+    "atmospheric": ["cloud", "haze", "mixed"],
+    "geometry_quality": ["blur", "low_resolution", "misregistration", "mixed"],
+    "noise_loss": ["gaussian_noise", "jpeg", "pixel_dropout", "mixed"]
+  },
+  "family_mean_conditions": {
+    "atmospheric": 6,
+    "geometry_quality": 9,
+    "noise_loss": 9
+  },
+  "mixed_reported_separately": true
+}

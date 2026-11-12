@@ -9,16 +9,17 @@ and CIDEr implementation.
 ## Primary tables
 
 - [`authoritative_baseline_comparison.md`](authoritative_baseline_comparison.md):
-  complete LEVIR-MCI comparison against five authoritative RSCC baselines,
-  plus the architecture-matched DINO-Aug control.
+  paper-aligned unseen comparison against seven external RSCC baselines,
+  Partial-RelKD (mask-free), and Partial-RelKD on three datasets.
 - [`three_dataset_full_results.md`](three_dataset_full_results.md): complete
   Clean/Seen/Unseen/Mixed results on LEVIR-MCI, SECOND-CC, and WHU-CDC.
 
 ## Supporting results
 
-- `stage2_ablation.md`: paper Table III incremental caption-stage ablation.
-- `statistical_significance.md`: paper-aligned paired clustered-Bootstrap result.
-- `main_completion_summary.md`: full-family LOFO and seed-stability summary.
+- `stage2_ablation.md`: paper-aligned incremental ablation, including the
+  independently retrained model without Stage-1 change preservation.
+- `main_completion_summary.md`: full-family LOFO summary for Change-Agent,
+  Partial-RelKD, and its mask-free counterpart.
 - `severity_summary.md` / `severity_summary.json`: severity 1--5 curves and
   machine-readable values.
 - `severity_audit.json`: deterministic severity-generation audit.

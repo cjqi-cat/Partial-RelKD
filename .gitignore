@@ -7,6 +7,9 @@ __pycache__/
 .ruff_cache/
 .venv/
 venv/
+build/
+dist/
+*.egg-info/
 
 # IDE / OS
 .idea/
@@ -16,6 +19,8 @@ Thumbs.db
 
 # Data, model weights, and generated features
 data/
+!partial_relkd/data/
+!partial_relkd/data/**
 datasets/
 checkpoints/
 weights/

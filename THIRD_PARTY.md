@@ -23,12 +23,14 @@ and LEVIR-MCI token/list interface expected by the experiment wrappers.
 | Chg2Cap | https://github.com/ShizhenChang/Chg2Cap | `7b8cda937002e614d51a6dab3d949aa7de77c176` | MIT |
 | MCCFormer-D and RSICCFormer | https://github.com/Chen-Yang-Liu/RSICC | `d1505e514c450c3728782ca723e82761e70bafd3` | No license file detected; do not redistribute without permission |
 | SEN | https://github.com/mrazhou/SEN | `42b97b62ff8ccd57938d371ff0affec59fc13410` | No license file detected; do not redistribute without permission |
+| SCNet | https://github.com/sundongwei/SCNet | `3174de1dc3579bcf6a459633ca1e061ba7208e81` | MIT |
+| RMNet | https://github.com/Jiahuiqu/RMNet | `d925e6874f8b58b3f1d315ef718f69a0ec785a38` | No license file detected at audit time; do not redistribute without permission |
 | RSCaMa (optional wrapper retained for ablation compatibility) | https://github.com/Chen-Yang-Liu/RSCaMa | `aa68e4c6933c7dd0f2e2f9cbd7642d61929c86a5` | No license file detected; do not redistribute without permission |
 | OpenAI CLIP | https://github.com/openai/CLIP | install from upstream when required | MIT |
 
-The `stage10_authoritative_baselines` and
-`stage10_9_three_dataset_baselines` directories contain only local experiment
-wrappers and configuration logic. They do not grant permission to redistribute
+The corresponding directories under `baselines/wrappers/` contain only local
+experiment wrappers and configuration logic.
+They do not grant permission to redistribute
 the external implementations or checkpoints. For repositories without an
 explicit license, users must obtain the code directly from the upstream owner
 and use it only under permissions they have independently secured.
