@@ -48,17 +48,11 @@ pip install -r requirements.txt
 pip install -e . --no-deps
 ```
 
-## Important: materialize paths before running
+## Set up a runnable workspace
 
-The validated stage drivers originally ran in a fixed server layout. In this
-release, machine-specific prefixes are replaced by four explicit tokens:
-
-- `__PROJECT_ROOT__`
-- `__DATA_ROOT__`
-- `__CHANGE_AGENT_ROOT__`
-- `__WORK_ROOT__` / `__STORAGE_ROOT__`
-
-Generate a runnable compatibility workspace:
+The training and evaluation scripts require local paths to the datasets and the
+Change-Agent components. After cloning this repository, create a runnable
+workspace by providing these paths:
 
 ```bash
 python tools/materialize_workspace.py \
@@ -67,18 +61,35 @@ python tools/materialize_workspace.py \
   --change-agent-root /path/to/Change-Agent/Multi_change
 ```
 
-The command refuses to write into a non-empty output directory. It restores
-the original top-level `stage*` layout, copies the canonical `partial_relkd`
-package, and substitutes all path tokens while leaving tracked templates
-unchanged.
+Arguments:
 
-The concise public wrappers delegate to those validated drivers. For example:
+- `--output`: an empty directory in which the runnable experiment workspace
+  will be created;
+- `--data-root`: the directory containing the datasets described in
+  [`DATASETS.md`](DATASETS.md);
+- `--change-agent-root`: the local Change-Agent `Multi_change` directory,
+  including its caption decoder, evaluation code, and LEVIR-MCI metadata.
+
+The command creates the experiment directories, copies the public
+`partial_relkd` package and configurations, and resolves local path
+placeholders. It does not copy datasets, pretrained weights, or third-party
+repositories.
+
+The output directory must be empty to avoid overwriting existing files.
+
+After setup, the concise command wrappers can be used to launch the validated
+experiment drivers. For example:
 
 ```bash
-python scripts/train_partial_relkd.py --workspace /path/to/robust_cc/project -- \
+python scripts/train_partial_relkd.py \
+  --workspace /path/to/robust_cc/project \
+  -- \
   --config /path/to/robust_cc/project/configs/stage2/partial_relkd.json \
   --output /path/to/robust_cc/project/stage6_7_partial_hybrid/runs/p3_partial_relation
 ```
+
+Dataset preparation and third-party dependency requirements are documented in
+[`DATASETS.md`](DATASETS.md) and [`THIRD_PARTY.md`](THIRD_PARTY.md).
 
 ## Reproducing the main geometry-quality protocol
 
