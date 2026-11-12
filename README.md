@@ -34,7 +34,7 @@ baselines/wrappers/                 # interfaces for seven comparison baselines
 experiments/legacy_stages/          # exact validated stage drivers and ablations
 reported_results/                   # paper-aligned canonical summaries
 docs/                               # method and severity figures
-tools/                              # release audit and path materialization
+tools/                              # workspace materialization and data-free smoke testing
 ```
 
 Raw datasets, pretrained weights, trained checkpoints, feature caches,
